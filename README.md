@@ -98,7 +98,7 @@ https://angular.io/guide/template-syntax
 
 <!-- Creates a local variable movieplayer that provides access to the video element instance in  data-binding and event-binding expressions in the current template. -->
 <video #movieplayer ...>
-<button (click)="movieplayer.play()">
+  <button (click)="movieplayer.play()">
 </video>  
 
 <!-- The * symbol turns the current element into an embedded template. Equivalent to: <ng-template [myUnless]="myExpression"><p>...</p></ng-template> -->
@@ -115,7 +115,7 @@ https://angular.io/guide/template-syntax
 
 <!--An <svg> root element is detected as an SVG element automatically, without the prefix. -->
 <svg>
- <rect x="0" y="0" width="100" height="100"/>
+  <rect x="0" y="0" width="100" height="100"/>
 </svg>  
 ```
 
@@ -126,47 +126,43 @@ https://angular.io/guide/attribute-directives
 import { CommonModule } from '@angular/common';
 
 // Removes or recreates a portion of the DOM tree based on the showSection expression.
-// <section *ngIf="showSection"> 
+<section *ngIf="showSection"> 
 
 // Turns the li element and its contents into a template, and uses that to instantiate a view for
 // each item in list.
-// <li *ngFor="let item of list">  
+<li *ngFor="let item of list">  
 
 // Conditionally swaps the contents of the div by selecting one of the embedded templates based on 
 // the current value of conditionExpression.
-// <div [ngSwitch]="conditionExpression">
-// <ng-template [ngSwitchCase]="case1Exp">...</ng-template>
-// <ng-template ngSwitchCase="case2LiteralString">...</ng-template>
-// <ng-template ngSwitchDefault>...</ng-template>
-// </div>  
+<div [ngSwitch]="conditionExpression">
+<ng-template [ngSwitchCase]="case1Exp">...</ng-template>
+<ng-template ngSwitchCase="case2LiteralString">...</ng-template>
+<ng-template ngSwitchDefault>...</ng-template>
+</div>  
 
 // Binds the presence of CSS classes on the element to the truthiness of the associated map 
 // values. The right-hand expression should return {class-name: true/false} map.
-// <div [ngClass]="{'active': isActive, 'disabled': isDisabled}">  
+<div [ngClass]="{'active': isActive, 'disabled': isDisabled}">  
 
 // Allows you to assign styles to an HTML element using CSS. You can use CSS directly, as in the
 // first example, or you can call a method from the component.
-// <div [ngStyle]="{'property': 'value'}">
-// <div [ngStyle]="dynamicStyles()"> 
+<div [ngStyle]="{'property': 'value'}">
+<div [ngStyle]="dynamicStyles()"> 
+```
 
+### FORMS
+https://angular.io/guide/forms
 
-/* *******************************************************************************************
- * FORMS
- * https://angular.io/guide/forms
- * ******************************************************************************************* */
-
-
+```js
 import { FormsModule } from '@angular/forms';
 
 // Provides two-way data-binding, parsing, and validation for form controls.
-// <input [(ngModel)]="userName">  
+<input [(ngModel)]="userName">  
+```
 
+### CLASS DECORATORS
 
-/* *******************************************************************************************
- * CLASS DECORATORS
- * ******************************************************************************************* */
-
-
+```js
 import { Directive, ... } from '@angular/core';
 
 // Declares that a class is a component and provides metadata about the component.
@@ -227,7 +223,7 @@ ngOnDestroy() { ... }
 ### DEPENDENCY INJECTION CONFIGURATION
 https://angular.io/guide/dependency-injection
 
-```
+```js
 // Sets or overrides the provider for MyService to the MyMockService class.
 { provide: MyService, useClass: MyMockService } 
 
@@ -257,22 +253,23 @@ const routes: Routes = [
 const routing = RouterModule.forRoot(routes); 
 
 // Marks the location to load the component of the active route.
-// <router-outlet></router-outlet>
-// <router-outlet name="aux"></router-outlet>
+<router-outlet></router-outlet>
+<router-outlet name="aux"></router-outlet>
 
 // Creates a link to a different view based on a route instruction consisting of a route path, 
 // required and optional parameters, query parameters, and a fragment. To navigate to a root 
 // route, use the / prefix; for a child route, use the ./prefix; for a sibling or parent, use the 
 // ../ prefix.
-// <a routerLink="/path">
-// <a [routerLink]="[ '/path', routeParam ]">
-// <a [routerLink]="[ '/path', { matrixParam: 'value' } ]">
-// <a [routerLink]="[ '/path' ]" [queryParams]="{ page: 1 }">
-// <a [routerLink]="[ '/path' ]" fragment="anchor">
+
+<a routerLink="/path">
+<a [routerLink]="[ '/path', routeParam ]">
+<a [routerLink]="[ '/path', { matrixParam: 'value' } ]">
+<a [routerLink]="[ '/path' ]" [queryParams]="{ page: 1 }">
+<a [routerLink]="[ '/path' ]" fragment="anchor">
 
 // The provided classes are added to the element when the routerLink becomes the current active
 // route.
-// <a [routerLink]="[ '/path' ]" routerLinkActive="active">  
+<a [routerLink]="[ '/path' ]" routerLinkActive="active">  
 
 class CanActivateGuard implements CanActivate {
   canActivate(
@@ -351,3 +348,4 @@ class CanLoadGuard implements CanLoad {
   loadChildren: ...
 }
 ```
+
