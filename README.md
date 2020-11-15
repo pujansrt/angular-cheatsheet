@@ -362,3 +362,75 @@ class CanLoadGuard implements CanLoad {
 }
 ```
 
+
+## Input and Output
+
+**Input()** To pass value into child component
+
+```js
+// hero-parent.component.ts
+import { Component } from '@angular/core';
+
+@Component({
+  selector: 'app-hero-parent',
+  template: `<h2>{{master}} controls {{heroes.length}} heroes</h2>
+<app-hero-child *ngFor="let hero of heroes" [hero]="hero" [master]="master">
+</app-hero-child>`
+})
+export class HeroParentComponent {
+  heroes = [
+    { name: 'Superman', location: 'Hong Kong' },
+    { name: 'Spiderman', location: 'Dallas' },
+    { name: 'Ironman', location: 'Delhi' },
+  ];
+  master = 'Master';
+}
+
+// hero-child.component.ts
+@Component({
+  selector: 'app-hero-child',
+  template: `<h3>{{hero.name}} says:</h3><p>I, {{hero.name}}, am at your service in {{hero.location}}, {{master}}.</p>`
+})
+export class HeroChildComponent {
+  @Input() hero;
+  @Input() master;
+}
+```
+
+Output shows when load `<app-hero-parent>` in app.component.html
+
+```html
+Master controls 3 heroes
+Superman says:
+I, Superman, am at your service in Hong Kong, Master
+Spiderman says:
+I, Spiderman, am at your service in Dallas, Master
+Ironman says:
+I, Ironman, am at your service in Delhi, Master
+```
+
+
+
+
+
+**Output()** Emiting event to parent component
+
+```js
+import {Component, Input, Output, EventEmitter} from '@angular/core';
+
+@Component({
+    selector: 'yc',
+    template: `<xc (notifyFromX)='onNotify($event)'></xc>`
+})
+
+export class ChildComponent {
+    @Output() notifyFromY: EventEmitter<string> = new EventEmitter<string>();
+
+    constructor(){}
+
+    onNotify(message:string):void {
+        //console.log(message, new Date());
+        this.notifyFromY.emit(message + ' Y --->');
+    }
+}
+```
