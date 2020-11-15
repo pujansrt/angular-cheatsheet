@@ -365,6 +365,8 @@ class CanLoadGuard implements CanLoad {
 
 ## Input and Output
 
+### Input
+
 **Input()** To pass value into child component
 
 ```js
@@ -411,7 +413,7 @@ I, Ironman, am at your service in Delhi, Master
 
 
 
-
+### Output
 
 **Output()** Emiting event to parent component
 
