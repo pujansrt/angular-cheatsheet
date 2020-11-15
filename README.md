@@ -71,27 +71,31 @@ bootstrap: [MyAppComponent]
 ### TEMPLATE SYNTAX
 https://angular.io/guide/template-syntax
 
-```html
-<!-- Binds property value to the result of expression firstName -->
-<input [value]="firstName"> 
-
+#### Style
+```js
 <!-- Binds attribute role to the result of expression myAriaRole. -->
 <div [attr.role]="myAriaRole">  
 
-<!-- Binds the presence of the CSS class extra-sparkle on the element to the truthiness of the expression isDelightful. -->
 <div [class.extra-sparkle]="isDelightful">  
-
-<!-- Binds style property width to the result of expression mySize in pixels. Units are optional. -->
 <div [style.width.px]="mySize"> 
+<i class="fa" [ngClass]="{'fa-heart-o': !item.id,'fa-heart': product.wishid}" (click)="list(item)"></i>
+<div class="form-group" [ngClass]="{ 'has-error': f.submitted && !username.valid }">...</div>
 
-<!-- Calls method readRainbow when a click event is triggered on this button element (or its children) and passes in the event object. -->
+// Allows you to assign styles to an HTML element using CSS.
+<div [ngStyle]="{'property': 'value'}">
+<div [ngStyle]="dynamicStyles()"> 
+```
+
+#### Main
+```js
+<input [value]="firstName"> <!-- Binds property value to the result of expression firstName -->
+  
+<!-- Calls method readRainbow defined in its component.ts file when a click event is triggered on this button-->
 <button (click)="readRainbow($event)">  
 
-<!-- Binds a property to an interpolated string, for example, "Hello Seabiscuit". Equivalent to: <div [title]="'Hello ' + ponyName"> -->
 <div title="Hello {{ponyName}}">  
-
-<!-- Binds text content to an interpolated string, for example, "Hello Seabiscuit". -->
 <p>Hello {{ponyName}}</p> 
+<p>Employer: {{employer?.companyName}}</p> <!-- If employer exists then print companyName -->
 
 <!-- Sets up two-way data binding. Equivalent to: <my-cmp [title]="name" (titleChange)="name=$event"> -->
 <my-cmp [(title)]="name"> 
@@ -106,17 +110,43 @@ https://angular.io/guide/template-syntax
 
 <!-- Transforms the current value of expression cardNumber via the pipe called myCardNumberFormatter. -->
 <p>Card No.: {{cardNumber | myCardNumberFormatter}}</p> 
+```
 
-<!-- The safe navigation operator (?) means that the employer field is optional and if undefined, the rest of the expression should be ignored. -->
-<p>Employer: {{employer?.companyName}}</p>  
+#### Loop
+##### Table
 
-<!-- An SVG snippet template needs an svg: prefix on its root element to disambiguate the SVG element from an HTML component. -->
-<svg:rect x="0" y="0" width="100" height="100"/>  
+```js
+<table>
+    <thead>
+        <th>Name</th>
+        <th>Index</th>
+    </thead>
+    <tbody>
+        <tr *ngFor="let hero of heroes">
+            <td>{{hero.name}}</td>
+        </tr>
+    </tbody>
+</table>
+```
 
-<!--An <svg> root element is detected as an SVG element automatically, without the prefix. -->
-<svg>
-  <rect x="0" y="0" width="100" height="100"/>
-</svg>  
+##### Other Loop
+```js
+<div *ngFor="let hero of heroes; let i=index">{{i + 1}} - {{hero.fullName}}</div>  
+
+<li *ngFor="let item of items; let i = index; trackBy: trackByFn"></li>
+
+<select id="jarfile" (change)="sh(w)" name="jarfile" [(ngModel)]="w.jarfile">
+   <option *ngFor="let t of jars" [value]="t" [attr.selected]="w.jarfile==t ? true : null">{{t}}</option>
+</select>
+```
+
+##### Print Items
+```js
+<div *ngFor="let item of items; let firstItem = first; let lastItem = last">
+  <p *ngIf="firstItem">I am the first item and I am gonna be showed</p>
+  <p *ngIf="!firstItem">I am not the first item and I will not show up :(</p>
+  <p *ngIf="lastItem">But I'm gonna be showed as I am the last item :)</p>
+</div>
 ```
 
 ### BUILT-IN DIRECTIVES
@@ -125,11 +155,8 @@ https://angular.io/guide/attribute-directives
 ```js
 import { CommonModule } from '@angular/common';
 
-// Removes or recreates a portion of the DOM tree based on the showSection expression.
 <section *ngIf="showSection"> 
 
-// Turns the li element and its contents into a template, and uses that to instantiate a view for
-// each item in list.
 <li *ngFor="let item of list">  
 
 // Conditionally swaps the contents of the div by selecting one of the embedded templates based on 
@@ -138,16 +165,7 @@ import { CommonModule } from '@angular/common';
 <ng-template [ngSwitchCase]="case1Exp">...</ng-template>
 <ng-template ngSwitchCase="case2LiteralString">...</ng-template>
 <ng-template ngSwitchDefault>...</ng-template>
-</div>  
-
-// Binds the presence of CSS classes on the element to the truthiness of the associated map 
-// values. The right-hand expression should return {class-name: true/false} map.
-<div [ngClass]="{'active': isActive, 'disabled': isDisabled}">  
-
-// Allows you to assign styles to an HTML element using CSS. You can use CSS directly, as in the
-// first example, or you can call a method from the component.
-<div [ngStyle]="{'property': 'value'}">
-<div [ngStyle]="dynamicStyles()"> 
+</div> 
 ```
 
 ### FORMS
@@ -158,13 +176,10 @@ https://angular.io/guide/forms
 import { FormsModule } from '@angular/forms';
 
 @NgModule({
-  declarations: [
-    ...
-  ],
+  declarations: [...],
   imports: [
     ...,
     FormsModule,
-    ...
   ],
   providers: [...],
   bootstrap: [AppComponent]
@@ -179,31 +194,23 @@ import { FormsModule } from '@angular/forms';
 ```js
 import { Directive, ... } from '@angular/core';
 
-// Declares that a class is a component and provides metadata about the component.
-@Component({...})
+@Component({...}) // Declares that a class is a component and provides metadata about the component.
 class MyComponent() {}  
 
-// Declares that a class is a directive and provides metadata about the directive.
-@Directive({...})
+@Directive({...}) // Declares that a class is a directive and provides metadata about the directive.
 class MyDirective() {}  
 
-// Declares that a class is a pipe and provides metadata about the pipe.
-@Pipe({...})
+@Pipe({...})  		// Declares that a class is a pipe and provides metadata about the pipe.
 class MyPipe() {} 
 
-// Declares that a class can be injected into the constructor of another class
-// by the dependency injector.
-@Injectable()
+@Injectable()			// Declares that a class can be injected into the constructor of another class 
 class MyService() {}  
 ```
 
 ### COMPONENT CHANGE DETECTION AND LIFECYCLE HOOKS
 
 ```js
-// (implemented as class methods)
-
-// Called before any other lifecycle hook. Use it to inject dependencies, but avoid any serious 
-// work here.
+// Called before any other lifecycle hook. Avoid any serious work here.
 constructor(myService: MyService, ...) { ... }  
 
 // Called after every change to input properties and before processing content or child views.
@@ -222,12 +229,10 @@ ngAfterContentInit() { ... }
 // Called after every check of the component's or directive's content.
 ngAfterContentChecked() { ... } 
 
-// Called after ngAfterContentInit when the component's views and child views / the view that a 
-// directive is in has been initialized.
+// Called after ngAfterContentInit when the component's views+child views/that a directive has been initialized.
 ngAfterViewInit() { ... } 
 
-// Called after every check of the component's views and child views / the view that a directive 
-// is in.
+// Called after every check of the component's views and child views / the view that a directive is in.
 ngAfterViewChecked() { ... }  
 
 // Called once, before the instance is destroyed.
@@ -293,8 +298,7 @@ class CanActivateGuard implements CanActivate {
 }
 
 // An interface for defining a class that the router should call first to determine if it should 
-// activate this component. Should return a boolean or an Observable/Promise that resolves to a 
-// boolean.
+// activate this component. Should return a boolean or an Observable/Promise that resolves to a boolean.
 {
   path: ...,
   canActivate: [CanActivateGuard]
@@ -324,8 +328,7 @@ class CanActivateChildGuard implements CanActivateChild {
 }
 
 // An interface for defining a class that the router should call first to determine if it should 
-// activate the child route. Should return a boolean or an Observable/Promise that resolves to a 
-// boolean.
+// activate the child route. Should return a boolean or an Observable/Promise that resolves to a  boolean.
 {
   path: ...,
   canActivateChild: [CanActivateGuard],
@@ -339,9 +342,7 @@ class ResolveGuard implements Resolve<T> {
   ): Observable<any>|Promise<any>|any { ... }
 }
 
-// An interface for defining a class that the router should call first to resolve route data 
-// before rendering the route. Should return a value or an Observable/Promise that resolves to a 
-// value.
+// An interface for defining a class that the router should call first to resolve route data before rendering the route. Should return a value or an Observable/Promise that resolves to a value.
 {
   path: ...,
   resolve: [ResolveGuard]
@@ -353,9 +354,7 @@ class CanLoadGuard implements CanLoad {
   ): Observable<boolean>|Promise<boolean>|boolean { ... }
 }
 
-// An interface for defining a class that the router should call first to check if the lazy loaded 
-// module should be loaded. Should return a boolean or an Observable/Promise that resolves to a 
-// boolean.
+// An interface for defining a class that the router should call first to check if the lazy loaded module should be loaded. Should return a boolean or an Observable/Promise that resolves to a boolean.
 {
   path: ...,
   canLoad: [CanLoadGuard],
