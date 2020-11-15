@@ -3,9 +3,28 @@ BASED ON https://angular.io/guide/cheatsheet
 
 
 ```sh
-npm install --save @angular/cli       // install command line interface (CLI) for Angular apps
-ng serve                              // serve the app
-ng build                              // build the release
+npm install --save @angular/cli       # install command line interface (CLI) for Angular apps
+
+ng new Todo                           # Create new Todo project. Generates new Todo folder in current directory
+ng serve                              # serve the app
+
+
+ng g component my-new-component       # Component	MyNewComponent will be created and added to app.module.ts
+ng g directive my-new-directive       # new directive
+ng g pipe my-new-pipe
+ng g service my-new-service
+
+
+ng g class my-new-class
+ng g interface my-new-interface
+ng g enum my-new-enum
+ng g module my-module
+
+
+ng build                              # build the release
+ng build --prod --base-href /aws/
+ng build --prod --output-hashing none
+ng build --prod --base-href /aws/ --output-path ~/Sites/aws
 ```
 
 
