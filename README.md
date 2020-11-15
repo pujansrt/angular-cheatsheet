@@ -2,7 +2,7 @@
 BASED ON https://angular.io/guide/cheatsheet
 
 
-```sh
+```python
 npm install --save @angular/cli       # install command line interface (CLI) for Angular apps
 
 ng new Todo                           # Create new Todo project. Generates new Todo folder in current directory
@@ -30,18 +30,13 @@ ng build --prod --base-href /aws/ --output-path ~/Sites/aws
 
 ### BOOSTRAPPING
 https://angular.io/guide/bootstrapping
+https://angular.io/guide/ngmodules
 
 ```js
 import { platformBrowserDynamic } from '@angular/platform-browser-dynamic';
 
 // Bootstraps the app, using the root component from the specified NgModule.
 platformBrowserDynamic().bootstrapModule(AppModule); 
-
-
-/* *******************************************************************************************
- * NG MODULES
- * https://angular.io/guide/ngmodules
- * ******************************************************************************************* */
 
 
 import { NgModule } from '@angular/core';
@@ -60,15 +55,13 @@ class MyModule {}
 // List of components, directives, and pipes that belong to this module.
 declarations: [MyRedComponent, MyBlueComponent, MyDatePipe] 
 
-// List of modules to import into this module. Everything from the imported modules is available 
-// to declarations of this module.
+// List of modules to import into this module. Everything from the imported modules is available to declarations of this module.
 imports: [BrowserModule, SomeOtherModule] 
 
 // List of components, directives, and pipes visible to modules that import this module.
 exports: [MyRedComponent, MyDatePipe] 
 
-// List of dependency injection providers visible both to the contents of this module and to 
-// importers of this module.
+// List of dependency injection providers visible both to the contents of this module and to importers of this module.
 providers: [MyService, { provide: ... }]  
 
 // List of components to bootstrap when this module is bootstrapped.
@@ -79,58 +72,51 @@ bootstrap: [MyAppComponent]
 https://angular.io/guide/template-syntax
 
 ```html
-// Binds property value to the result of expression firstName.
+<!-- Binds property value to the result of expression firstName -->
 <input [value]="firstName"> 
 
-// Binds attribute role to the result of expression myAriaRole.
+<!-- Binds attribute role to the result of expression myAriaRole. -->
 <div [attr.role]="myAriaRole">  
 
-// Binds the presence of the CSS class extra-sparkle on the element to the truthiness of the 
-// expression isDelightful.
+<!-- Binds the presence of the CSS class extra-sparkle on the element to the truthiness of the expression isDelightful. -->
 <div [class.extra-sparkle]="isDelightful">  
 
-// Binds style property width to the result of expression mySize in pixels. Units are optional.
+<!-- Binds style property width to the result of expression mySize in pixels. Units are optional. -->
 <div [style.width.px]="mySize"> 
 
-// Calls method readRainbow when a click event is triggered on this button element (or its
-// children) and passes in the event object.
+<!-- Calls method readRainbow when a click event is triggered on this button element (or its children) and passes in the event object. -->
 <button (click)="readRainbow($event)">  
 
-// Binds a property to an interpolated string, for example, "Hello Seabiscuit". 
-// Equivalent to: <div [title]="'Hello ' + ponyName">
+<!-- Binds a property to an interpolated string, for example, "Hello Seabiscuit". Equivalent to: <div [title]="'Hello ' + ponyName"> -->
 <div title="Hello {{ponyName}}">  
 
-// Binds text content to an interpolated string, for example, "Hello Seabiscuit".
+<!-- Binds text content to an interpolated string, for example, "Hello Seabiscuit". -->
 <p>Hello {{ponyName}}</p> 
 
-// Sets up two-way data binding. Equivalent to: <my-cmp [title]="name" (titleChange)="name=$event">
+<!-- Sets up two-way data binding. Equivalent to: <my-cmp [title]="name" (titleChange)="name=$event"> -->
 <my-cmp [(title)]="name"> 
 
-// Creates a local variable movieplayer that provides access to the video element instance in 
-// data-binding and event-binding expressions in the current template.
+<!-- Creates a local variable movieplayer that provides access to the video element instance in  data-binding and event-binding expressions in the current template. -->
 <video #movieplayer ...>
 <button (click)="movieplayer.play()">
 </video>  
 
-// The * symbol turns the current element into an embedded template. 
-// Equivalent to: <ng-template [myUnless]="myExpression"><p>...</p></ng-template>
-// <p *myUnless="myExpression">...</p> 
+<!-- The * symbol turns the current element into an embedded template. Equivalent to: <ng-template [myUnless]="myExpression"><p>...</p></ng-template> -->
+<p *myUnless="myExpression">...</p> 
 
-// Transforms the current value of expression cardNumber via the pipe called myCardNumberFormatter.
-// <p>Card No.: {{cardNumber | myCardNumberFormatter}}</p> 
+<!-- Transforms the current value of expression cardNumber via the pipe called myCardNumberFormatter. -->
+<p>Card No.: {{cardNumber | myCardNumberFormatter}}</p> 
 
-// The safe navigation operator (?) means that the employer field is optional and if undefined, 
-// the rest of the expression should be ignored.
-// <p>Employer: {{employer?.companyName}}</p>  
+<!-- The safe navigation operator (?) means that the employer field is optional and if undefined, the rest of the expression should be ignored. -->
+<p>Employer: {{employer?.companyName}}</p>  
 
-// An SVG snippet template needs an svg: prefix on its root element to disambiguate the SVG 
-// element from an HTML component.
-// <svg:rect x="0" y="0" width="100" height="100"/>  
+<!-- An SVG snippet template needs an svg: prefix on its root element to disambiguate the SVG element from an HTML component. -->
+<svg:rect x="0" y="0" width="100" height="100"/>  
 
-// An <svg> root element is detected as an SVG element automatically, without the prefix.
-// <svg>
-// <rect x="0" y="0" width="100" height="100"/>
-// </svg>  
+<!--An <svg> root element is detected as an SVG element automatically, without the prefix. -->
+<svg>
+ <rect x="0" y="0" width="100" height="100"/>
+</svg>  
 ```
 
 ### BUILT-IN DIRECTIVES
