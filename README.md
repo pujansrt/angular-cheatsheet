@@ -154,7 +154,21 @@ import { CommonModule } from '@angular/common';
 https://angular.io/guide/forms
 
 ```js
+// app.module.ts
 import { FormsModule } from '@angular/forms';
+
+@NgModule({
+  declarations: [
+    ...
+  ],
+  imports: [
+    ...,
+    FormsModule,
+    ...
+  ],
+  providers: [...],
+  bootstrap: [AppComponent]
+})
 
 // Provides two-way data-binding, parsing, and validation for form controls.
 <input [(ngModel)]="userName">  
