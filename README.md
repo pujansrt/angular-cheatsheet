@@ -436,3 +436,60 @@ export class ChildComponent {
     }
 }
 ```
+
+### AuthGuard
+
+```js
+RouterModule.forRoot([
+    ...,
+    { path: 'check-out', component: CheckOutComponent, canActivate: [AuthGuard] },
+    { path: 'admin/products/new', component: AdminProductEditComponent, canActivate: [AuthGuard, AdminAuthGuard] },
+    { path: 'admin/products/:id', component: AdminProductEditComponent, canActivate: [AuthGuard, AdminAuthGuard] }
+]);
+```
+
+```js
+@Injectable({
+  providedIn: 'root'
+})
+export class AuthGuard implements CanActivate {
+
+  constructor(public authService: AuthService, public router: Router) {}
+
+  canActivate(
+    next: ActivatedRouteSnapshot,
+    state: RouterStateSnapshot): Observable<boolean> | Promise<boolean> | boolean {
+    if (this.authService.isLoggedIn !== true) {
+      this.router.navigate(['login']);
+    }
+    return true;
+  }
+}
+```
+
+```js
+@Injectable({
+  providedIn: 'root'
+})
+export class AdminAuthGuard implements CanActivate {
+
+  constructor(public authService: AuthService, public router: Router) {
+  }
+
+  canActivate(
+    next: ActivatedRouteSnapshot,
+    state: RouterStateSnapshot): Observable<boolean> | Promise<boolean> | boolean {
+
+    if (this.authService.isLoggedIn !== true) {
+      this.router.navigate(['login']);
+    }
+
+    if (!this.authService.isAdmin) {
+      this.router.navigate(['not-found']);
+    }
+
+    return true;
+  }
+}
+```
+
