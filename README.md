@@ -387,7 +387,9 @@ export class HeroParentComponent {
   ];
   master = 'Master';
 }
+```
 
+```js
 // hero-child.component.ts
 @Component({
   selector: 'app-hero-child',
